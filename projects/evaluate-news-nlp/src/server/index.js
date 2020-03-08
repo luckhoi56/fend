@@ -9,7 +9,7 @@ var json = {
     'message': 'this is a message',
     'time': 'now'
 }
-
+var AYLIENTextAPI = require('aylien_textapi');
 const app = express()
 app.use(cors())
 // to use json
@@ -36,3 +36,28 @@ app.get('/test', function (req, res) {
 app.listen(8081, function () {
     console.log('Example app listening on port 8081!')
 })
+// set aylien API credentias
+var textapi = new AYLIENTextAPI({
+    application_id: "fe262dc9",
+    application_key: "0ce9cb547908be43820e5e3b13d3eed0"
+  });
+
+app.get('/user',(request,response)=>{
+    console.log('user requests data');
+    //m_api();
+  });
+
+function m_api(m_content){
+    console.log('api is called')
+  textapi.sentiment({
+    'text':m_content
+  }, function(error, response) {
+    if (error === null) {
+      console.log(response);
+    }
+  });
+}
+var m_object={
+
+}
+m_api('John is a very good football player!');
