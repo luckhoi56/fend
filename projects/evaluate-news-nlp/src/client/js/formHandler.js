@@ -7,13 +7,23 @@ function handleSubmit(event) {
     Client.checkForName(formText)
 
     console.log("::: Form Submitted :::")
-    fetch('http://localhost:8081/test')
-    .then(res => {
-        return res.json()
-    })
-    .then(function(data) {
-        document.getElementById('results').innerHTML = data.message
-    })
+    let reqBody = {
+    theText: formText
+};
+
+fetch('http://localhost:8081/user', {
+    method: 'POST',
+    body: JSON.stringify(reqBody),
+    headers: {"Content-Type": "application/json"}
+})
+.then(res => res.json())
+.then(function(res) {
+    //document.getElementById('results').innerHTML = res.polarity    
+    document.getElementById('results').innerHTML = JSON.stringify(res)
+   
+})
+
 }
 
 export { handleSubmit }
+

@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static('dist'))
 
-console.log(JSON.stringify(mockAPIResponse))
+//console.log(JSON.stringify(mockAPIResponse))
 
 app.get('/', function (req, res) {
 //    res.sendFile('dist/index.html')
@@ -42,22 +42,17 @@ var textapi = new AYLIENTextAPI({
     application_key: "0ce9cb547908be43820e5e3b13d3eed0"
   });
 
-app.get('/user',(request,response)=>{
-    console.log('user requests data');
-    //m_api();
+app.post('/user',(request,response)=>{
+   
+    console.log(request.body.theText);
+    textapi.sentiment({
+        'text':request.body.theText
+      }, function(error, data) {
+        if (error === null) {
+            
+          response.send(data);
+        }
+      });
   });
 
-function m_api(m_content){
-    console.log('api is called')
-  textapi.sentiment({
-    'text':m_content
-  }, function(error, response) {
-    if (error === null) {
-      console.log(response);
-    }
-  });
-}
-var m_object={
 
-}
-m_api('John is a very good football player!');
